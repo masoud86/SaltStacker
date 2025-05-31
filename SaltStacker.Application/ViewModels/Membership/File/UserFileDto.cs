@@ -9,7 +9,7 @@ public class UserFileDto
 
     public required string FileName { get; set; }
 
-    public string Url => $"/Uploads/Customer/{UserId}/{FileName}";
+    public string Url => $"/Uploads/Account/{UserId}/{FileName}";
 
     public required string UserId { get; set; }
 

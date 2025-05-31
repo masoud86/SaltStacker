@@ -1,9 +1,9 @@
 ﻿using SaltStacker.Common.Helper;
 using System.ComponentModel.DataAnnotations;
 
-namespace SaltStacker.Application.ViewModels.Customer
+namespace SaltStacker.Application.ViewModels.Account
 {
-    public class RegisterCustomer
+    public class RegisterAccount
     {
         [DataType(DataType.Text)]
         [Display(Name = "Name")]

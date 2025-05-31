@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using SaltStacker.Application.ViewModels.Api;
 using SaltStacker.Application.ViewModels.Base;
-using SaltStacker.Application.ViewModels.Customer;
+using SaltStacker.Application.ViewModels.Account;
 using SaltStacker.Application.ViewModels.Membership;
 using SaltStacker.Application.ViewModels.Nutrition;
 using SaltStacker.Application.ViewModels.Nutrition.Package;
@@ -35,21 +35,21 @@ namespace SaltStacker.Application.Helpers
 
             #endregion Basic Informations
 
-            #region Customer
+            #region Account
 
-            CreateMap<AspNetUser, CustomerDto>();
-            CreateMap<CustomerDto, EditUser>();
+            CreateMap<AspNetUser, AccountDto>();
+            CreateMap<AccountDto, EditUser>();
             CreateMap<AspNetUser, EditUser>();
-            CreateMap<AspNetUser, CustomerProfileApi>()
+            CreateMap<AspNetUser, AccountProfileApi>()
                 .ForMember(dest => dest.EmailAddress, map => map.MapFrom(source => source.Email));
             CreateMap<AspNetUser, UserDto>();
-            CreateMap<CustomerDto, UserDto>()
+            CreateMap<AccountDto, UserDto>()
                 .ForMember(dest => dest.Username, map => map.MapFrom(source => source.Email));
-            CreateMap<AspNetUser, CustomerInformation>()
+            CreateMap<AspNetUser, AccountInformation>()
                 .ForMember(dest => dest.EmailAddress, map => map.MapFrom(source => source.Email))
                 .ReverseMap();
 
-            #endregion Customer
+            #endregion Account
 
             #region Membership
 

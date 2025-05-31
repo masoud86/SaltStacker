@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SaltStacker.Application.ViewModels.Membership
 {
-    public class LoginCustomer
+    public class LoginAccount
     {
         [Phone(ErrorMessageResourceName = "RegularExpression", ErrorMessageResourceType = typeof(Resources.Error))]
         [DataType(DataType.PhoneNumber, ErrorMessageResourceName = "RegularExpression",

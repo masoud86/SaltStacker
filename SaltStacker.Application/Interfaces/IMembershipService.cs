@@ -97,7 +97,7 @@ namespace SaltStacker.Application.Interfaces
 
         Task<IdentityResult> ChangeUserAccessAsync(UserDto user, bool access);
 
-        Task<int> NumberOfCustomersAsync();
+        Task<int> NumberOfAccountsAsync();
 
         Task<IdentityResult> ChangePasswordAsync(ChangePassword model);
 

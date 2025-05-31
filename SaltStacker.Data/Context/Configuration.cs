@@ -37,8 +37,8 @@ namespace SaltStacker.Data.Context
             //        new RoleSeed
             //        {
             //            Id = seeder.UserRoleId,
-            //            Name = "Customer",
-            //            DisplayName = "Customer",
+            //            Name = "Account",
+            //            DisplayName = "Account",
             //            Description = "",
             //            IsLocked = true
             //        },

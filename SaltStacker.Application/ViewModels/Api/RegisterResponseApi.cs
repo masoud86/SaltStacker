@@ -1,4 +1,4 @@
-﻿using SaltStacker.Application.ViewModels.Customer;
+﻿using SaltStacker.Application.ViewModels.Account;
 
 namespace SaltStacker.Application.ViewModels.Api
 {
@@ -8,6 +8,6 @@ namespace SaltStacker.Application.ViewModels.Api
 
         public string? ErrorMessage { get; set; }
 
-        public CustomerInformation? CustomerInformation { get; set; }
+        public AccountInformation? AccountInformation { get; set; }
     }
 }

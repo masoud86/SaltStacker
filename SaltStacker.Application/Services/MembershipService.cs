@@ -18,11 +18,11 @@ namespace SaltStacker.Application.Services
         private readonly UserManager<AspNetUser> _userManager;
         private readonly SignInManager<AspNetUser> _signInManager;
         private readonly RoleManager<AspNetRole> _roleManager;
-        private readonly ICustomerRepository _customerRepository;
+        private readonly IAccountRepository _accountRepository;
         private readonly IMapper _iMapper;
 
         public MembershipService(UserManager<AspNetUser> userManager, SignInManager<AspNetUser> signInManager,
-            RoleManager<AspNetRole> roleManager, ICustomerRepository customerRepository)
+            RoleManager<AspNetRole> roleManager, IAccountRepository accountRepository)
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -41,7 +41,7 @@ namespace SaltStacker.Application.Services
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
-            _customerRepository = customerRepository;
+            _accountRepository = accountRepository;
         }
 
         public async Task<SignInResult> LoginAsync(Login model)
@@ -484,9 +484,9 @@ namespace SaltStacker.Application.Services
             return updateUser;
         }
 
-        public async Task<int> NumberOfCustomersAsync()
+        public async Task<int> NumberOfAccountsAsync()
         {
-            var allUserRoles = await _userManager.GetUsersInRoleAsync("Customer");
+            var allUserRoles = await _userManager.GetUsersInRoleAsync("Account");
             return allUserRoles.Count;
         }
 

@@ -35,18 +35,18 @@ public class SettingController : ControllerBase
     }
 
     /// <summary>
-    /// Get customer app current version
+    /// Get account app current version
     /// </summary>
     /// <returns>Current Version</returns>
     [HttpGet]
     [Route("[action]")]
     public ActionResult<string> GetCurrentVersion()
     {
-        return new OkObjectResult(_applicationService.GetSetting("CustomerAppVersion"));
+        return new OkObjectResult(_applicationService.GetSetting("AccountAppVersion"));
     }
 
     /// <summary>
-    /// Temporary API to set customer app current version
+    /// Temporary API to set account app current version
     /// </summary>
     /// <param name="version">Current Version</param>
     /// <returns>Ok Response</returns>
@@ -54,7 +54,7 @@ public class SettingController : ControllerBase
     [Route("[action]")]
     public ActionResult SetCurrentVersion(string version)
     {
-        _applicationService.SetSettings("CustomerAppVersion", version);
+        _applicationService.SetSettings("AccountAppVersion", version);
         _applicationService.UpdateCache();
         return Ok();
     }

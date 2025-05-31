@@ -3,5 +3,6 @@
 #### New Features
 
 #### Improvements
+- Renamed all instances of customer to account across the solution to ensure consistent terminology.
 
 #### Bug Fixes

@@ -13,13 +13,13 @@ namespace SaltStacker.Application.Services
     {
         private readonly IMapper _iMapper;
         private readonly IOperationRepository _operationRepository;
-        private readonly ICustomerRepository _customerRepository;
+        private readonly IAccountRepository _accountRepository;
         private readonly INutritionService _nutritionService;
         private readonly INutritionRepository _nutritionRepository;
         private readonly IApplicationRepository _applicationRepository;
 
         public OperationService(IOperationRepository operationRepository,
-            ICustomerRepository customerRepository,
+            IAccountRepository accountRepository,
             INutritionService nutritionService, INutritionRepository nutritionRepository,
             IApplicationRepository applicationRepository)
         {
@@ -27,7 +27,7 @@ namespace SaltStacker.Application.Services
 
             _iMapper = config.CreateMapper();
             _operationRepository = operationRepository;
-            _customerRepository = customerRepository;
+            _accountRepository = accountRepository;
             _nutritionService = nutritionService;
             _nutritionRepository = nutritionRepository;
             _applicationRepository = applicationRepository;

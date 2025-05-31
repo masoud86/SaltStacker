@@ -20,7 +20,7 @@ namespace SaltStacker.IoC
             service.AddScoped<IWebRequestService, WebRequestService>();
             service.AddScoped<IApplicationService, ApplicationService>();
             service.AddScoped<ICacheService, CacheService>();
-            service.AddScoped<ICustomerService, CustomerService>();
+            service.AddScoped<IAccountService, AccountService>();
             service.AddScoped<INutritionService, NutritionService>();
             service.AddScoped<IOperationService, OperationService>();
             service.AddScoped<IUploadService, UploadService>();
@@ -29,7 +29,7 @@ namespace SaltStacker.IoC
             //Infrastructure Data Layer
             service.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             service.AddScoped<IApplicationRepository, ApplicationRepository>();
-            service.AddScoped<ICustomerRepository, CustomerRepository>();
+            service.AddScoped<IAccountRepository, AccountRepository>();
             service.AddScoped<INutritionRepository, NutritionRepository>();
             service.AddScoped<IOperationRepository, OperationRepository>();
         }

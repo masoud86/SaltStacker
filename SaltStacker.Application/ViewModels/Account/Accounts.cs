@@ -2,28 +2,28 @@
 using SaltStacker.Common.Helper;
 using System.ComponentModel.DataAnnotations;
 
-namespace SaltStacker.Application.ViewModels.Customer
+namespace SaltStacker.Application.ViewModels.Account
 {
-    public class Customers : Pagination
+    public class Accounts : Pagination
     {
-        public Customers() : base("Name")
+        public Accounts() : base("Name")
         {
             Columns = new Dictionary<string, string> {
                 {"Name", "Name"}
             };
         }
 
-        public List<CustomerDto> Items { get; set; }
+        public List<AccountDto> Items { get; set; }
     }
 
-    public class CustomerFilters : Pagination
+    public class AccountFilters : Pagination
     {
-        public CustomerFilters() : base("Name")
+        public AccountFilters() : base("Name")
         {
         }
     }
 
-    public class CustomerDto
+    public class AccountDto
     {
         public string Id { get; set; }
 
