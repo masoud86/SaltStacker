@@ -10,37 +10,29 @@ public static class Configuration
         var seeder = new Seeder(modelBuilder);
 
         seeder.Identity(
-            new List<UserSeed>
-            {
+            [
                 new UserSeed
                 {
                     Id = seeder.DefaultAdminId,
-                    Name = "Masoud Abedi",
-                    Email = "admin@saltstacker.com",
-                    EmailConfirmed = true,
-                    Password = "hUsdI23&$",
+                    Name = "Admin",
+                    Password = "Admin@123",
                     RoleId = seeder.AdminRoleId
                 }
-            },
-            new List<RoleSeed>
-            {
+            ],
+            [
                 new RoleSeed
                 {
                     Id = seeder.AdminRoleId,
                     Name = "Administrator",
-                    DisplayName = "Administrator",
-                    Description = "",
-                    IsLocked = true
+                    IsSystem = true
                 },
                 new RoleSeed
                 {
                     Id = seeder.UserRoleId,
-                    Name = "Account",
-                    DisplayName = "Account",
-                    Description = "",
-                    IsLocked = true
+                    Name = "User",
+                    IsSystem = true
                 }
-            }
+            ]
         );
 
         seeder.ApplicationSetting();

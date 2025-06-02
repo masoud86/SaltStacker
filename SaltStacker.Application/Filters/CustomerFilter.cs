@@ -8,7 +8,7 @@ namespace SaltStacker.Application.Filters
     {
         public static ExpressionStarter<AspNetUser> ToExpression(AccountFilters filter)
         {
-            var predicate = PredicateBuilder.New<AspNetUser>(p => !p.IsAdmin);
+            var predicate = PredicateBuilder.New<AspNetUser>(p => !p.IsSystem);
 
             if (!string.IsNullOrEmpty(filter.Query))
             {

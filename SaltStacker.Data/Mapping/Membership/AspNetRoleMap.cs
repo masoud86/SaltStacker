@@ -8,10 +8,7 @@ namespace SaltStacker.Data.Mapping.Membership
     {
         public void Configure(EntityTypeBuilder<AspNetRole> builder)
         {
-            builder.Property(p => p.DisplayName).HasMaxLength(50).IsRequired();
-            builder.Property(p => p.Description).HasMaxLength(500).IsRequired(false);
-            builder.Property(p => p.Icon).HasMaxLength(20).IsRequired(false);
-            builder.Property(p => p.IsLocked).IsRequired();
+            builder.Property(p => p.IsSystem).IsRequired();
             builder.Property(p => p.CreateDateTime)
                 .HasColumnType("datetime")
                 .HasDefaultValueSql("GETUTCDATE()")

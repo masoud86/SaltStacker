@@ -12,7 +12,7 @@ public class AspNetUserMap : IEntityTypeConfiguration<AspNetUser>
         builder.Property(p => p.RefreshToken).HasMaxLength(int.MaxValue).IsRequired(false);
         builder.Property(p => p.RefreshTokenExpiryTime).IsRequired(false);
         builder.Property(p => p.IsBlocked).IsRequired();
-        builder.Property(p => p.IsAdmin).IsRequired().HasDefaultValue(false);
+        builder.Property(p => p.IsSystem).IsRequired().HasDefaultValue(false);
         builder.Property(p => p.CreateDateTime)
             .HasColumnType("datetime")
             .HasDefaultValueSql("GETUTCDATE()")

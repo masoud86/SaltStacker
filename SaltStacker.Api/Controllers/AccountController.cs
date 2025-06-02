@@ -53,6 +53,7 @@ public class AccountController : ControllerBase
     /// <response code="400">Bad Request</response>
     [HttpPost]
     [Route("[action]")]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult<RegisterResponseApi>> Register([FromBody] RegisterAccount model)
     {
         if (!ModelState.IsValid)

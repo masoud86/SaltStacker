@@ -89,7 +89,7 @@ namespace SaltStacker.Application.Services
         public async Task<IdentityResult> CreateUserAsync(CreateUser model)
         {
             var user = _iMapper.Map<AspNetUser>(model);
-            user.IsAdmin = true;
+            user.IsSystem = true;
             var createUser = await _userManager.CreateAsync(user, model.Password);
             if (createUser.Succeeded)
             {
@@ -266,9 +266,7 @@ namespace SaltStacker.Application.Services
             if (!string.IsNullOrEmpty(filter.Query))
             {
                 model = model.Where(p =>
-                    p.DisplayName.ToLower().Contains(filter.Query) ||
-                    p.Name.ToLower().Contains(filter.Query) ||
-                    p.Description.ToLower().Contains(filter.Query)
+                    p.Name.ToLower().Contains(filter.Query)
                 );
             }
 
@@ -276,9 +274,6 @@ namespace SaltStacker.Application.Services
 
             switch (filter.Sort.ToLower())
             {
-                case "displayname":
-                    model = filter.Direction == "asc" ? model.OrderBy(p => p.DisplayName) : model.OrderByDescending(p => p.DisplayName);
-                    break;
                 case "name":
                     model = filter.Direction == "asc" ? model.OrderBy(p => p.Name) : model.OrderByDescending(p => p.Name);
                     break;
@@ -353,8 +348,6 @@ namespace SaltStacker.Application.Services
         {
             var role = await FindRoleByIdAsync(model.Id);
             role.Name = model.Name;
-            role.DisplayName = model.DisplayName;
-            role.Description = model.Description;
             return await _roleManager.UpdateAsync(role);
         }
 
@@ -373,13 +366,13 @@ namespace SaltStacker.Application.Services
         public async Task<EditRole> GetRoleForEditAsync(string id)
         {
             var role = await FindRoleByIdAsync(id);
-            return role == null || role.IsLocked ? null : _iMapper.Map<EditRole>(role);
+            return role == null || role.IsSystem ? null : _iMapper.Map<EditRole>(role);
         }
 
         public async Task<DeleteRole> GetRoleForDeleteAsync(string id)
         {
             var role = await FindRoleByIdAsync(id);
-            return role == null || role.IsLocked ? null : _iMapper.Map<DeleteRole>(role);
+            return role == null || role.IsSystem ? null : _iMapper.Map<DeleteRole>(role);
         }
 
         public async Task<UserDto> GetUserInformationAsync(string id)

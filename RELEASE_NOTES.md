@@ -1,10 +1,12 @@
 ﻿## Version 0.1.0
 ### 20xx-xx-xx
 #### New Features
+- Seeded a default admin user and the Administrator role to support secure, role-based access to the API.
 
 #### Improvements
 - Renamed all instances of customer to account across the solution to ensure consistent terminology.
 - Removed the Kitchen model and all associated domain entities to streamline the solution's architecture.
 - Added a structured release notes file to document and track version changes.
+- Cleaned up and extended user and role models for better maintainability and future support of scoped access control.
 
 #### Bug Fixes

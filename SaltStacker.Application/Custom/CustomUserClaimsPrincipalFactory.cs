@@ -29,7 +29,6 @@ namespace SaltStacker.Application.Custom
             principal.AddClaim(new Claim(ClaimTypes.MobilePhone, user.PhoneNumber ?? ""));
             principal.AddClaim(new Claim(ClaimTypes.Name, user.Name ?? ""));
             principal.AddClaim(new Claim(ClaimTypes.Role, currentRole ?? ""));
-            principal.AddClaim(new Claim("RoleDisplayName", role.DisplayName ?? ""));
 
             var roleClaims = await _roleManager.GetClaimsAsync(role);
             principal.AddClaims(roleClaims);

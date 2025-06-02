@@ -36,7 +36,7 @@ public class UserDto
     [Display(Name = "RegisterTime", ResourceType = typeof(Resources.Global))]
     public string CreateDate => CreateDateTime != DateTime.MinValue ? CreateDateTime.ToShortDateString() : "";
 
-    public bool IsAdmin { get; set; }
+    public bool IsSystem { get; set; }
 
     public RoleDto? RoleModel { get; set; }
 }
