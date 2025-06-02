@@ -35,8 +35,6 @@ namespace SaltStacker.Application.ViewModels.Nutrition
         public bool OnlyActives { get; set; } = true;
 
         public string? User { get; set; }
-
-        public int? KitchenId { get; set; }
     }
 
     public class RecipeDto

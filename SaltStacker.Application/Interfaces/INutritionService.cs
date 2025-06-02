@@ -105,7 +105,7 @@ namespace SaltStacker.Application.Interfaces
 
         Task<List<OtherSize>> GetFoodSizesAsync(int foodId, int? recipeId = null);
 
-        Task<ItemDetails> GetRecipeDetailsApi(string code, int kitchenId = 1);
+        Task<ItemDetails> GetRecipeDetailsApi(string code);
 
         Task<Tuple<Recipe, decimal, string>> CustomizeRecipeAsync(string code, RecipeChanges changes);
 

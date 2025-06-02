@@ -1,11 +1,11 @@
-﻿using SaltStacker.Application.Custom;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using SaltStacker.Application.Custom;
 using SaltStacker.Application.Interfaces;
 using SaltStacker.Application.Services;
 using SaltStacker.Data.Repository;
 using SaltStacker.Domain.Interfaces;
 using SaltStacker.Domain.Models.Membership;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace SaltStacker.IoC
 {

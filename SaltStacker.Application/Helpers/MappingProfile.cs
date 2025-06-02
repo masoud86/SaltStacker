@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using SaltStacker.Application.ViewModels.Account;
 using SaltStacker.Application.ViewModels.Api;
 using SaltStacker.Application.ViewModels.Base;
-using SaltStacker.Application.ViewModels.Account;
 using SaltStacker.Application.ViewModels.Membership;
 using SaltStacker.Application.ViewModels.Nutrition;
 using SaltStacker.Application.ViewModels.Nutrition.Package;
 using SaltStacker.Application.ViewModels.Operation;
-using SaltStacker.Application.ViewModels.Operation.Kitchen;
 using SaltStacker.Application.ViewModels.Settings;
 using SaltStacker.Common.Enums;
 using SaltStacker.Domain.Models.Membership;
@@ -227,16 +226,6 @@ namespace SaltStacker.Application.Helpers
             CreateMap<Tag, TagApi>().ReverseMap();
 
             #endregion Marketing
-
-            #region Operation
-
-            CreateMap<KitchenRecipe, KitchenRecipeDto>().ReverseMap();
-
-            CreateMap<Kitchen, KitchenDto>().ReverseMap();
-            CreateMap<Kitchen, KitchenApi>()
-                .ForMember(dest => dest.Zone, map => map.MapFrom(source => source.Zone.Title));
-
-            #endregion Operation
 
             #region Settings
 

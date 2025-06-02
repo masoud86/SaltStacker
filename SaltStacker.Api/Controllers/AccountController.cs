@@ -13,7 +13,7 @@ using System.Web;
 namespace SaltStacker.Api.Controllers;
 
 /// <summary>
-/// Everything about Accounts
+/// Manage user accounts and authentication
 /// </summary>
 [ApiController]
 [Route("[controller]")]

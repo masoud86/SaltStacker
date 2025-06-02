@@ -513,12 +513,6 @@ namespace SaltStacker.Application.Services
             return _iMapper.Map<List<UserDto>>(pChefs);
         }
 
-        public async Task<IdentityResult> SetDefaultKitchenAsync(string userId, int kitchenId)
-        {
-            var user = await FindUserByIdAsync(userId);
-            return await _userManager.UpdateAsync(user);
-        }
-
         public async Task<ServiceResult> SwitchRoleAsync(SwitchRole model)
         {
             var user = await FindUserByIdAsync(model.UserId);

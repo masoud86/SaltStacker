@@ -1,6 +1,4 @@
 ﻿using Humanizer;
-using SaltStacker.Application.ViewModels.Operation.Kitchen;
-using SaltStacker.Common.Enums;
 using SaltStacker.Common.Helper;
 using System.ComponentModel.DataAnnotations;
 

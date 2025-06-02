@@ -56,9 +56,6 @@ namespace SaltStacker.Data.Context
 
         //Operation
         public DbSet<OverheadCost> OverheadCosts { get; set; }
-        public DbSet<Kitchen> Kitchens { get; set; }
-        public DbSet<KitchenUser> KitchenUsers { get; set; }
-        public DbSet<KitchenRecipe> KitchenRecipes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -105,9 +102,6 @@ namespace SaltStacker.Data.Context
             builder.ApplyConfiguration(new Mapping.Nutrition.PackageGroupItemMap());
             builder.ApplyConfiguration(new Mapping.Nutrition.IngredientTypeAllergenAlertMap());
             builder.ApplyConfiguration(new Mapping.Operation.OverheadCostMap());
-            builder.ApplyConfiguration(new Mapping.Operation.KitchenMap());
-            builder.ApplyConfiguration(new Mapping.Operation.KitchenUserMap());
-            builder.ApplyConfiguration(new Mapping.Operation.KitchenRecipeMap());
 
             builder.Seed();
         }

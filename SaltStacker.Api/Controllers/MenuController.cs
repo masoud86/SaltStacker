@@ -91,7 +91,6 @@ namespace SaltStacker.Api.Controllers
         /// <param name="pageSize">Page size</param>
         /// <param name="sort">Sort column</param>
         /// <param name="direction">Sort direction</param>
-        /// <param name="kitchen">Kitchen Id</param>
         /// <returns>List of items</returns>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Bad Request</response>
@@ -99,7 +98,7 @@ namespace SaltStacker.Api.Controllers
         [Route("[action]")]
         [AllowAnonymous]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<ActionResult<MenuItems>> Items(string? query, string? diet, string? tags, string? prepDays, int page = 1, int pageSize = 10, string? sort = "Title", string? direction = "Asc", int kitchen = 1)
+        public async Task<ActionResult<MenuItems>> Items(string? query, string? diet, string? tags, string? prepDays, int page = 1, int pageSize = 10, string? sort = "Title", string? direction = "Asc")
         {
             var ownerId = "";
             if (diet != null && diet == "personal" && User != null)
@@ -124,7 +123,6 @@ namespace SaltStacker.Api.Controllers
             }
             return new OkObjectResult(await _nutritionService.GetMenuItemsAsync(new MenuItemFilters
             {
-                KitchenId = kitchen,
                 Page = page,
                 PageSize = pageSize,
                 Sort = !string.IsNullOrEmpty(sort) && sort != "null" ? sort : "",
@@ -141,19 +139,18 @@ namespace SaltStacker.Api.Controllers
         /// Item details
         /// </summary>
         /// <param name="code">Item code</param>
-        /// <param name="kitchenId">Kitchen Id</param>
         /// <returns>Item details</returns>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Bad Request</response>
         [HttpGet]
         [Route("[action]")]
-        public async Task<ActionResult<ItemDetails>> ItemDetails(string code, int kitchenId)
+        public async Task<ActionResult<ItemDetails>> ItemDetails(string code)
         {
             if (string.IsNullOrEmpty(code))
             {
                 return BadRequest();
             }
-            var details = await _nutritionService.GetRecipeDetailsApi(code, kitchenId);
+            var details = await _nutritionService.GetRecipeDetailsApi(code);
             if (details == null || details.Id == 0)
             {
                 return new NotFoundObjectResult(details);

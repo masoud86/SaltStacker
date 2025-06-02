@@ -6,26 +6,24 @@ namespace SaltStacker.Data.Seed
     #region Models
     public class RoleSeed
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
+        public required string Id { get; set; }
+        public required string Name { get; set; }
 
-        public string DisplayName { get; set; }
+        public required string DisplayName { get; set; }
 
-        public string Description { get; set; }
+        public required string Description { get; set; }
 
         public bool IsLocked { get; set; }
     }
 
     public class UserSeed
     {
-        public string Id { get; set; }
-        public string? Name { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool PhoneNumberConfirmed { get; set; }
-        public string Email { get; set; }
+        public required string Id { get; set; }
+        public required string Name { get; set; }
+        public required string Email { get; set; }
         public bool EmailConfirmed { get; set; }
-        public string Password { get; set; }
-        public string RoleId { get; set; }
+        public required string Password { get; set; }
+        public required string RoleId { get; set; }
     }
     #endregion Models
 
@@ -50,8 +48,6 @@ namespace SaltStacker.Data.Seed
                     Email = user.Email,
                     NormalizedEmail = user.Email.Trim().ToUpper(),
                     EmailConfirmed = user.EmailConfirmed,
-                    PhoneNumber = user.PhoneNumber,
-                    PhoneNumberConfirmed = user.PhoneNumberConfirmed,
                     PasswordHash = hasher.HashPassword(null, user.Password),
                     IsAdmin = true
                 });

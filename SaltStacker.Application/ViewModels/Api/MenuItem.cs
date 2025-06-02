@@ -21,8 +21,6 @@ namespace SaltStacker.Application.ViewModels.Api
         public List<DayOfWeek>? PrepDays { get; set; }
 
         public string? OwnerId { get; set; }
-
-        public int? KitchenId { get; set; }
     }
 
     public class MenuItem

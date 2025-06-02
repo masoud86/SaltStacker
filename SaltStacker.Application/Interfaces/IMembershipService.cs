@@ -105,8 +105,6 @@ namespace SaltStacker.Application.Interfaces
 
         Task<List<UserDto>> GetPersonalChefAsync();
 
-        Task<IdentityResult> SetDefaultKitchenAsync(string userId, int kitchenId);
-
         Task<ServiceResult> SwitchRoleAsync(SwitchRole model);
     }
 }

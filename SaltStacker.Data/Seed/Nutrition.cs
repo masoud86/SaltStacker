@@ -15,8 +15,6 @@ namespace SaltStacker.Data.Seed
 
         public void Nutrition()
         {
-            Kitchens();
-
             Unit();
 
             Diets();
@@ -30,17 +28,6 @@ namespace SaltStacker.Data.Seed
             Foods();
 
             IngredientCookingCategory();
-        }
-
-        private void Kitchens()
-        {
-            _modelBuilder.Entity<Kitchen>().HasData(
-                new Kitchen
-                {
-                    Id = 1,
-                    Title = "Default"
-                }
-            );
         }
 
         private int GetIngredient(string title, string type, int unit)
@@ -3384,7 +3371,6 @@ namespace SaltStacker.Data.Seed
             var recipeIngredientTypeUnitCounter = 1;
             var recipeIngredientAmountCounter = 1;
             var recipeIngredientSubstituteCounter = 1;
-            var kitchenCookingDaysCounter = 1;
 
             foreach (var food in foods)
             {

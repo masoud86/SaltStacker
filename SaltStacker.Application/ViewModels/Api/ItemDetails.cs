@@ -14,8 +14,6 @@ namespace SaltStacker.Application.ViewModels.Api
 
         public string Type { get; set; }
 
-        public string By { get; set; }
-
         public decimal DefaultPrice { get; set; }
 
         public decimal PayablePrice { get; set; }

@@ -805,7 +805,7 @@ namespace SaltStacker.Application.Services
             return filtered.OrderByDescending(p => p.Selected).ToList();
         }
 
-        public async Task<ItemDetails> GetRecipeDetailsApi(string code, int kitchenId)
+        public async Task<ItemDetails> GetRecipeDetailsApi(string code)
         {
             var recipe = await _nutritionRepository.GetRecipeAsync(code.ToLower().Trim(),
                 include: p => p
@@ -924,12 +924,6 @@ namespace SaltStacker.Application.Services
                 };
             }
 
-            var kitchen = await _operationRepository.GetKitchenAsync(kitchenId);
-            var by = recipe.PersonalChef == null
-                    ? kitchen.Title
-                    : $"innuchef {recipe.PersonalChef.Name}";
-
-
             return new ItemDetails
             {
                 Id = recipe.Id,
@@ -939,7 +933,6 @@ namespace SaltStacker.Application.Services
                 Orderable = recipe.Orderable,
                 DefaultPrice = recipe.Price,
                 PayablePrice = recipe.Price,
-                By = by,
                 Attachments = _iMapper.Map<List<FoodAttachmentApi>>(recipe.Food.Attachments),
                 Ingredients = ingredients.OrderBy(p => p.Order)
                     .Select(p => p.Title + (string.IsNullOrEmpty(p.Description) ? "" : $" ({p.Description})"))

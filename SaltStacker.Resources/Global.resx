@@ -483,12 +483,6 @@
   <data name="InProgress" xml:space="preserve">
     <value>In Progress</value>
   </data>
-  <data name="Kitchen" xml:space="preserve">
-    <value>Kitchen</value>
-  </data>
-  <data name="Kitchens" xml:space="preserve">
-    <value>Kitchens</value>
-  </data>
   <data name="LastModifiedAt" xml:space="preserve">
     <value> - Last modified at {0}</value>
   </data>

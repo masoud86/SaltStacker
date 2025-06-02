@@ -1,29 +1,14 @@
-﻿using SaltStacker.Application.ViewModels.Api;
+﻿using LinqKit;
+using Microsoft.EntityFrameworkCore;
+using SaltStacker.Application.ViewModels.Api;
 using SaltStacker.Application.ViewModels.Nutrition;
 using SaltStacker.Application.ViewModels.Nutrition.Package;
-using SaltStacker.Application.ViewModels.Operation.Kitchen;
 using SaltStacker.Domain.Models.Nutrition;
-using SaltStacker.Domain.Models.Operation;
-using LinqKit;
-using Microsoft.EntityFrameworkCore;
 
 namespace SaltStacker.Application.Filters
 {
     public static class NutritionFilter
     {
-        public static ExpressionStarter<Kitchen> ToExpression(KitchenFilters filter)
-        {
-            var predicate = PredicateBuilder.New<Kitchen>(_ => true);
-
-            if (!string.IsNullOrEmpty(filter.Query))
-            {
-                predicate.And(p =>
-                    p.Title.Contains(filter.Query, StringComparison.CurrentCultureIgnoreCase));
-            }
-
-            return predicate;
-        }
-
         public static ExpressionStarter<Package> ToExpression(PackageFilters filter)
         {
             var predicate = PredicateBuilder.New<Package>(_ => true);
