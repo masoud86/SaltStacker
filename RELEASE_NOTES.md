@@ -1,5 +1,5 @@
-﻿## Version 0.1.0
-### 20xx-xx-xx
+﻿## Version 0.2.0
+### 2025-06-07
 #### New Features
 - Seeded a default admin user and the Administrator role to support secure, role-based access to the API.
 
@@ -9,5 +9,3 @@
 - Added a structured release notes file to document and track version changes.
 - Cleaned up and extended user and role models for better maintainability and future support of scoped access control.
 - Replaced dynamic hashing with a fixed password hash for the default admin user to stabilize EF Core migrations.
-
-#### Bug Fixes
