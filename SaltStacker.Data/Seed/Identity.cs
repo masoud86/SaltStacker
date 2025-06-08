@@ -38,7 +38,10 @@ public partial class Seeder
             {
                 Id = user.Id,
                 Name = user.Name,
-                PasswordHash = hasher.HashPassword(null, user.Password),
+                //PasswordHash = hasher.HashPassword(null, user.Password),
+                ConcurrencyStamp = "4c159afc-539f-4d73-b997-d23eea86b75c",
+                PasswordHash = "AQAAAAIAAYagAAAAEI0CynVzbtPbQD3eAMJft/5fjCYJbXaectUfMaDSh85aoH6XqLGQsyhEUMH6xP76Ng==",
+                SecurityStamp = "081c6cd0-07fb-457f-9e8e-92cea0fd4cae",
                 IsSystem = true
             });
 

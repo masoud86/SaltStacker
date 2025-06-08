@@ -35,8 +35,8 @@ public static class Configuration
             ]
         );
 
-        seeder.ApplicationSetting();
+        //seeder.ApplicationSetting();
 
-        seeder.Nutrition();
+        //seeder.Nutrition();
     }
 }

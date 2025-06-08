@@ -8,5 +8,6 @@
 - Removed the Kitchen model and all associated domain entities to streamline the solution's architecture.
 - Added a structured release notes file to document and track version changes.
 - Cleaned up and extended user and role models for better maintainability and future support of scoped access control.
+- Replaced dynamic hashing with a fixed password hash for the default admin user to stabilize EF Core migrations.
 
 #### Bug Fixes
