@@ -102,13 +102,6 @@ namespace SaltStacker.Application.Services
             return _iMapper.Map<List<ZoneApi>>(zones);
         }
 
-        public async Task<List<ZoneApi>> GetZonesByKitchenAsync(int kitchenId)
-        {
-            var kitchen = await _operationRepository.GetKitchenAsync(kitchenId);
-            var zones = await _applicationRepository.GetActiveZonesAsync(kitchen.Zone.CityId);
-            return _iMapper.Map<List<ZoneApi>>(zones);
-        }
-
         public async Task<List<ZoneDto>> GetZonesAsync()
         {
             var zones = await _applicationRepository.GetZonesAsync();

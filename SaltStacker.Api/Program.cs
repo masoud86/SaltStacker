@@ -128,7 +128,7 @@ public class Program
         {
             opt.WatchPageUsername = "loguser";
             opt.WatchPagePassword = "123456";
-            opt.Blacklist = "Customer/Login,Customer/Register,Customer/Refresh";
+            opt.Blacklist = "Account/Login,Account/Register,Account/Refresh";
         });
         app.UseEndpoints(endpoints =>
         {

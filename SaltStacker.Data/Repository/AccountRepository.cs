@@ -8,16 +8,16 @@ using System.Linq.Expressions;
 
 namespace SaltStacker.Data.Repository
 {
-    public class CustomerRepository : ICustomerRepository
+    public class AccountRepository : IAccountRepository
     {
         private readonly AppDbContext _context;
 
-        public CustomerRepository(AppDbContext context)
+        public AccountRepository(AppDbContext context)
         {
             _context = context;
         }
 
-        public async Task<int> GetCustomersCountAsync(Expression<Func<AspNetUser, bool>> predicate = null)
+        public async Task<int> GetAccountsCountAsync(Expression<Func<AspNetUser, bool>> predicate = null)
         {
             if (predicate == null)
             {
@@ -27,7 +27,7 @@ namespace SaltStacker.Data.Repository
                 .CountAsync(predicate);
         }
 
-        public async Task<List<AspNetUser>> GetCustomersAsync(int start, int pageSize, string sortBy, string direction, Expression<Func<AspNetUser, bool>> predicate = null)
+        public async Task<List<AspNetUser>> GetAccountsAsync(int start, int pageSize, string sortBy, string direction, Expression<Func<AspNetUser, bool>> predicate = null)
         {
             return await _context.AspNetUsers
                 .Where(predicate)
@@ -43,13 +43,13 @@ namespace SaltStacker.Data.Repository
                 .FirstOrDefaultAsync(p => p.PhoneNumber == phoneNumber);
         }
 
-        public async Task<AspNetUser> FindCustomerByEmailAsync(string emailAddress)
+        public async Task<AspNetUser> FindAccountByEmailAsync(string emailAddress)
         {
             return await _context.AspNetUsers
                 .FirstOrDefaultAsync(p => p.NormalizedEmail == emailAddress);
         }
 
-        public async Task<bool> CreateCustomerAsync(AspNetUser user)
+        public async Task<bool> CreateAccountAsync(AspNetUser user)
         {
             var done = false;
             var strategy = _context.Database.CreateExecutionStrategy();
@@ -60,7 +60,7 @@ namespace SaltStacker.Data.Repository
 
                 try
                 {
-                    var role = await _context.AspNetRoles.FirstOrDefaultAsync(p => p.Name == "Customer");
+                    var role = await _context.AspNetRoles.FirstOrDefaultAsync(p => p.Name == "Account");
                     if (role != null)
                     {
                         await _context.AspNetUsers.AddAsync(user);

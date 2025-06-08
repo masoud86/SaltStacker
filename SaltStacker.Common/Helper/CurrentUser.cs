@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
 namespace SaltStacker.Common.Helper
 {
@@ -28,11 +25,6 @@ namespace SaltStacker.Common.Helper
             return GetValue(user, ClaimTypes.MobilePhone);
         }
 
-        public static string NationalCode(this ClaimsPrincipal user)
-        {
-            return GetValue(user, "NationalCode");
-        }
-
         public static string Username(this ClaimsPrincipal user)
         {
             return GetValue(user, ClaimTypes.Name);
@@ -46,12 +38,6 @@ namespace SaltStacker.Common.Helper
         public static string RoleDisplayName(this ClaimsPrincipal user)
         {
             return GetValue(user, "RoleDisplayName");
-        }
-
-        public static int? OrganizationId(this ClaimsPrincipal user)
-        {
-            var organizationId = GetValue(user, "OrganizationId");
-            return string.IsNullOrEmpty(organizationId) ? null : Convert.ToInt32(organizationId);
         }
 
         public static string Name(this ClaimsPrincipal user)

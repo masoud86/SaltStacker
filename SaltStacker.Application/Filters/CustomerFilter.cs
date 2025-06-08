@@ -1,14 +1,14 @@
-﻿using SaltStacker.Application.ViewModels.Customer;
+﻿using SaltStacker.Application.ViewModels.Account;
 using SaltStacker.Domain.Models.Membership;
 using LinqKit;
 
 namespace SaltStacker.Application.Filters
 {
-    public static class CustomerFilter
+    public static class AccountFilter
     {
-        public static ExpressionStarter<AspNetUser> ToExpression(CustomerFilters filter)
+        public static ExpressionStarter<AspNetUser> ToExpression(AccountFilters filter)
         {
-            var predicate = PredicateBuilder.New<AspNetUser>(p => !p.IsAdmin);
+            var predicate = PredicateBuilder.New<AspNetUser>(p => !p.IsSystem);
 
             if (!string.IsNullOrEmpty(filter.Query))
             {

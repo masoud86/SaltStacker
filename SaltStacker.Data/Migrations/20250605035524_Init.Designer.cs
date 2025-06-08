@@ -12,7 +12,7 @@ using SaltStacker.Data.Context;
 namespace SaltStacker.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250529060136_Init")]
+    [Migration("20250605035524_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -220,6 +220,13 @@ namespace SaltStacker.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "011b406e-94e4-480f-b0e3-d7ac50db372c",
+                            RoleId = "72c2c695-2efd-4fcf-b083-dcb1f47fa314"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -1349,127 +1356,6 @@ namespace SaltStacker.Data.Migrations
                     b.ToTable("Units", "nutrition");
                 });
 
-            modelBuilder.Entity("SaltStacker.Domain.Models.Operation.Kitchen", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreateDateTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("GETUTCDATE()");
-
-                    b.Property<double?>("Latitude")
-                        .HasMaxLength(15)
-                        .HasColumnType("float");
-
-                    b.Property<string>("Location")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<double?>("Longitude")
-                        .HasMaxLength(15)
-                        .HasColumnType("float");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<string>("PostalCode")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("Subtitle")
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int>("ZoneId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Title")
-                        .IsUnique();
-
-                    b.HasIndex("ZoneId");
-
-                    b.ToTable("Kitchens", "operation");
-                });
-
-            modelBuilder.Entity("SaltStacker.Domain.Models.Operation.KitchenRecipe", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreateDateTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("GETUTCDATE()");
-
-                    b.Property<int>("KitchenId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("KitchenId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("KitchenRecipes", "operation");
-                });
-
-            modelBuilder.Entity("SaltStacker.Domain.Models.Operation.KitchenUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreateDateTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("GETUTCDATE()");
-
-                    b.Property<bool>("IsOwner")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("KitchenId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Position")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("KitchenId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("KitchenUsers", "operation");
-                });
-
             modelBuilder.Entity("SaltStacker.Domain.Models.Operation.OverheadCost", b =>
                 {
                     b.Property<int>("Id")
@@ -1645,23 +1531,28 @@ namespace SaltStacker.Data.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Icon")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<bool>("IsLocked")
+                    b.Property<bool>("IsSystem")
                         .HasColumnType("bit");
 
                     b.HasDiscriminator().HasValue("AspNetRole");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "72c2c695-2efd-4fcf-b083-dcb1f47fa314",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR",
+                            CreateDateTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsSystem = true
+                        },
+                        new
+                        {
+                            Id = "634fce1a-f3e0-4512-86ab-628adb4999f1",
+                            Name = "User",
+                            NormalizedName = "USER",
+                            CreateDateTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsSystem = true
+                        });
                 });
 
             modelBuilder.Entity("SaltStacker.Domain.Models.Membership.AspNetUser", b =>
@@ -1673,13 +1564,13 @@ namespace SaltStacker.Data.Migrations
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<bool>("IsAdmin")
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSystem")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
-
-                    b.Property<bool>("IsBlocked")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasMaxLength(100)
@@ -1693,6 +1584,24 @@ namespace SaltStacker.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("AspNetUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "011b406e-94e4-480f-b0e3-d7ac50db372c",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "4c159afc-539f-4d73-b997-d23eea86b75c",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAIAAYagAAAAEI0CynVzbtPbQD3eAMJft/5fjCYJbXaectUfMaDSh85aoH6XqLGQsyhEUMH6xP76Ng==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "081c6cd0-07fb-457f-9e8e-92cea0fd4cae",
+                            TwoFactorEnabled = false,
+                            CreateDateTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsBlocked = false,
+                            IsSystem = true,
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -2049,55 +1958,6 @@ namespace SaltStacker.Data.Migrations
                     b.Navigation("Recipe");
 
                     b.Navigation("Tag");
-                });
-
-            modelBuilder.Entity("SaltStacker.Domain.Models.Operation.Kitchen", b =>
-                {
-                    b.HasOne("SaltStacker.Domain.Models.Setting.Zone", "Zone")
-                        .WithMany()
-                        .HasForeignKey("ZoneId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Zone");
-                });
-
-            modelBuilder.Entity("SaltStacker.Domain.Models.Operation.KitchenRecipe", b =>
-                {
-                    b.HasOne("SaltStacker.Domain.Models.Operation.Kitchen", "Kitchen")
-                        .WithMany()
-                        .HasForeignKey("KitchenId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SaltStacker.Domain.Models.Nutrition.Recipe", "Recipe")
-                        .WithMany()
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Kitchen");
-
-                    b.Navigation("Recipe");
-                });
-
-            modelBuilder.Entity("SaltStacker.Domain.Models.Operation.KitchenUser", b =>
-                {
-                    b.HasOne("SaltStacker.Domain.Models.Operation.Kitchen", "Kitchen")
-                        .WithMany()
-                        .HasForeignKey("KitchenId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SaltStacker.Domain.Models.Membership.AspNetUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Kitchen");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SaltStacker.Domain.Models.Setting.City", b =>

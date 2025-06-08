@@ -1,8 +1,8 @@
 ﻿using SaltStacker.Application.ViewModels.Membership;
 
-namespace SaltStacker.Application.ViewModels.Customer
+namespace SaltStacker.Application.ViewModels.Account
 {
-    public class CustomerProfileDto
+    public class AccountProfileDto
     {
         public int Id { get; set; }
 
@@ -14,7 +14,7 @@ namespace SaltStacker.Application.ViewModels.Customer
         public string? PhoneNumber { get; set; }
     }
 
-    public class CustomerProfileApi
+    public class AccountProfileApi
     {
         public string? Name { get; set; }
 

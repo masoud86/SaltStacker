@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SaltStacker.Application.ViewModels.Membership
 {
-    public class LoginCustomerTempData
+    public class LoginAccountTempData
     {
         public string SecretKey { get; set; }
 

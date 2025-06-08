@@ -97,15 +97,13 @@ namespace SaltStacker.Application.Interfaces
 
         Task<IdentityResult> ChangeUserAccessAsync(UserDto user, bool access);
 
-        Task<int> NumberOfCustomersAsync();
+        Task<int> NumberOfAccountsAsync();
 
         Task<IdentityResult> ChangePasswordAsync(ChangePassword model);
 
         Task<IdentityResult> ResetPasswordAsync(ResetPassword model);
 
         Task<List<UserDto>> GetPersonalChefAsync();
-
-        Task<IdentityResult> SetDefaultKitchenAsync(string userId, int kitchenId);
 
         Task<ServiceResult> SwitchRoleAsync(SwitchRole model);
     }

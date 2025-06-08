@@ -1,92 +1,78 @@
-﻿using SaltStacker.Domain.Models.Membership;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using SaltStacker.Domain.Models.Membership;
 
-namespace SaltStacker.Data.Seed
+namespace SaltStacker.Data.Seed;
+
+#region Models
+public class RoleSeed
 {
-    #region Models
-    public class RoleSeed
+    public required string Id { get; set; }
+    
+    public required string Name { get; set; }
+
+    public bool IsSystem { get; set; }
+}
+
+public class UserSeed
+{
+    public required string Id { get; set; }
+    public required string Name { get; set; }
+    public required string Password { get; set; }
+    public required string RoleId { get; set; }
+}
+#endregion Models
+
+public partial class Seeder
+{
+    public void Identity(List<UserSeed> users, List<RoleSeed> roles)
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
+        var hasher = new PasswordHasher<IdentityUser>();
+        var usersList = new List<AspNetUser>();
+        var rolesList = new List<AspNetRole>();
+        var userRoleList = new List<IdentityUserRole<string>>();
+        var roleClaims = new List<IdentityRoleClaim<string>>();
 
-        public string DisplayName { get; set; }
-
-        public string Description { get; set; }
-
-        public bool IsLocked { get; set; }
-    }
-
-    public class UserSeed
-    {
-        public string Id { get; set; }
-        public string? Name { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool PhoneNumberConfirmed { get; set; }
-        public string Email { get; set; }
-        public bool EmailConfirmed { get; set; }
-        public string Password { get; set; }
-        public string RoleId { get; set; }
-    }
-    #endregion Models
-
-    public partial class Seeder
-    {
-        public void Identity(List<UserSeed> users, List<RoleSeed> roles)
+        foreach (var user in users)
         {
-            var hasher = new PasswordHasher<IdentityUser>();
-            var usersList = new List<AspNetUser>();
-            var rolesList = new List<AspNetRole>();
-            var userRoleList = new List<IdentityUserRole<string>>();
-            var roleClaims = new List<IdentityRoleClaim<string>>();
-
-            foreach (var user in users)
+            usersList.Add(new AspNetUser
             {
-                usersList.Add(new AspNetUser
-                {
-                    Id = user.Id,
-                    Name = user.Name,
-                    UserName = user.Email.Split('@')[0],
-                    NormalizedUserName = user.Email.Split('@')[0].Trim().ToUpper(),
-                    Email = user.Email,
-                    NormalizedEmail = user.Email.Trim().ToUpper(),
-                    EmailConfirmed = user.EmailConfirmed,
-                    PhoneNumber = user.PhoneNumber,
-                    PhoneNumberConfirmed = user.PhoneNumberConfirmed,
-                    PasswordHash = hasher.HashPassword(null, user.Password),
-                    IsAdmin = true
-                });
+                Id = user.Id,
+                Name = user.Name,
+                //PasswordHash = hasher.HashPassword(null, user.Password),
+                ConcurrencyStamp = "4c159afc-539f-4d73-b997-d23eea86b75c",
+                PasswordHash = "AQAAAAIAAYagAAAAEI0CynVzbtPbQD3eAMJft/5fjCYJbXaectUfMaDSh85aoH6XqLGQsyhEUMH6xP76Ng==",
+                SecurityStamp = "081c6cd0-07fb-457f-9e8e-92cea0fd4cae",
+                IsSystem = true
+            });
 
-                userRoleList.Add(new IdentityUserRole<string>
-                {
-                    RoleId = user.RoleId,
-                    UserId = user.Id
-                });
-            }
-
-            foreach (var role in roles)
+            userRoleList.Add(new IdentityUserRole<string>
             {
-                rolesList.Add(new AspNetRole
-                {
-                    Id = role.Id,
-                    Name = role.Name,
-                    NormalizedName = role.Name.Trim().ToUpper(),
-                    DisplayName = role.DisplayName,
-                    Description = role.Description,
-                    IsLocked = role.IsLocked
-                });
-
-                if (role.Name == "Administrator")
-                {
-                    roleClaims.AddRange(new List<IdentityRoleClaim<string>>
-                    {
-                        new IdentityRoleClaim<string> { Id = 1, RoleId = role.Id, ClaimType = "" }
-                    });
-                }
-            }
-
-            _modelBuilder.Entity<AspNetUser>().HasData(usersList);
-            _modelBuilder.Entity<AspNetRole>().HasData(rolesList);
-            _modelBuilder.Entity<IdentityUserRole<string>>().HasData(userRoleList);
+                RoleId = user.RoleId,
+                UserId = user.Id
+            });
         }
+
+        foreach (var role in roles)
+        {
+            rolesList.Add(new AspNetRole
+            {
+                Id = role.Id,
+                Name = role.Name,
+                NormalizedName = role.Name.Trim().ToUpper(),
+                IsSystem = role.IsSystem
+            });
+
+            if (role.Name == "Administrator")
+            {
+                roleClaims.AddRange(
+                [
+                    new IdentityRoleClaim<string> { Id = 1, RoleId = role.Id, ClaimType = "" }
+                ]);
+            }
+        }
+
+        _modelBuilder.Entity<AspNetUser>().HasData(usersList);
+        _modelBuilder.Entity<AspNetRole>().HasData(rolesList);
+        _modelBuilder.Entity<IdentityUserRole<string>>().HasData(userRoleList);
     }
 }

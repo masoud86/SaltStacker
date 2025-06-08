@@ -8,13 +8,7 @@ namespace SaltStacker.Application.ViewModels.Membership
 
         public string Name { get; set; }
 
-        public string DisplayName { get; set; }
-
-        public string Description { get; set; }
-
-        public bool IsLocked { get; set; }
-
-        public string? Icon { get; set; }
+        public bool IsSystem { get; set; }
 
         public DateTime CreateDateTime { get; set; }
         public string CreateDateTimeLocal => CreateDateTime.ConvertFromUtcString();

@@ -21,8 +21,6 @@ namespace SaltStacker.Application.Interfaces
 
         Task<List<ZoneApi>> GetZonesApiAsync();
 
-        Task<List<ZoneApi>> GetZonesByKitchenAsync(int kitchenId);
-
         Task<List<ZoneDto>> GetZonesAsync();
 
         Task<ZoneDto> GetZoneAsync(int id);

@@ -1,6 +1,4 @@
 ﻿using Humanizer;
-using SaltStacker.Application.ViewModels.Operation.Kitchen;
-using SaltStacker.Common.Enums;
 using SaltStacker.Common.Helper;
 using System.ComponentModel.DataAnnotations;
 
@@ -38,7 +36,7 @@ public class UserDto
     [Display(Name = "RegisterTime", ResourceType = typeof(Resources.Global))]
     public string CreateDate => CreateDateTime != DateTime.MinValue ? CreateDateTime.ToShortDateString() : "";
 
-    public bool IsAdmin { get; set; }
+    public bool IsSystem { get; set; }
 
     public RoleDto? RoleModel { get; set; }
 }

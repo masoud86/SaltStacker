@@ -1,8 +1,8 @@
-﻿using SaltStacker.Application.ViewModels.Customer;
+﻿using SaltStacker.Application.ViewModels.Account;
 using System.ComponentModel.DataAnnotations;
 
 namespace SaltStacker.Application.ViewModels.Api;
-public class CustomerLogin
+public class AccountLogin
 {
     [DataType(DataType.Text)]
     [Display(Name = "Username", ResourceType = typeof(Resources.Security))]
@@ -17,5 +17,5 @@ public class CustomerLogin
 
 public class LoginResult : JwtToken
 {
-    public CustomerInformation? CustomerInformation { get; set; }
+    public AccountInformation? AccountInformation { get; set; }
 }

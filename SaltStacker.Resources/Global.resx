@@ -207,8 +207,8 @@
   <data name="CreateAt" xml:space="preserve">
     <value>Create At</value>
   </data>
-  <data name="CreateCustomer" xml:space="preserve">
-    <value>Create Customer</value>
+  <data name="CreateAccount" xml:space="preserve">
+    <value>Create Account</value>
   </data>
   <data name="CreatedAtBy" xml:space="preserve">
     <value>Created at {0} by {1}</value>
@@ -258,17 +258,17 @@
   <data name="CurrentState" xml:space="preserve">
     <value>Current State</value>
   </data>
-  <data name="Customer" xml:space="preserve">
-    <value>Customer</value>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
   </data>
-  <data name="CustomerFoodOrders" xml:space="preserve">
-    <value>Customer Food Orders</value>
+  <data name="AccountFoodOrders" xml:space="preserve">
+    <value>Account Food Orders</value>
   </data>
-  <data name="CustomerOpenOrders" xml:space="preserve">
-    <value>Customer Open Orders</value>
+  <data name="AccountOpenOrders" xml:space="preserve">
+    <value>Account Open Orders</value>
   </data>
-  <data name="Customers" xml:space="preserve">
-    <value>Customers</value>
+  <data name="Accounts" xml:space="preserve">
+    <value>Accounts</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Dashboard</value>
@@ -360,8 +360,8 @@
   <data name="EditBankGateway" xml:space="preserve">
     <value>Edit Bank Gateway</value>
   </data>
-  <data name="EditCustomer" xml:space="preserve">
-    <value>Edit Customer</value>
+  <data name="EditAccount" xml:space="preserve">
+    <value>Edit Account</value>
   </data>
   <data name="EditedSuccessfully" xml:space="preserve">
     <value>{0} edited successfully.</value>
@@ -482,12 +482,6 @@
   </data>
   <data name="InProgress" xml:space="preserve">
     <value>In Progress</value>
-  </data>
-  <data name="Kitchen" xml:space="preserve">
-    <value>Kitchen</value>
-  </data>
-  <data name="Kitchens" xml:space="preserve">
-    <value>Kitchens</value>
   </data>
   <data name="LastModifiedAt" xml:space="preserve">
     <value> - Last modified at {0}</value>

@@ -3,7 +3,7 @@ using SaltStacker.Application.Filters;
 using SaltStacker.Application.Helpers;
 using SaltStacker.Application.Interfaces;
 using SaltStacker.Application.ViewModels.Base;
-using SaltStacker.Application.ViewModels.Customer;
+using SaltStacker.Application.ViewModels.Account;
 using SaltStacker.Application.ViewModels.Membership;
 using SaltStacker.Application.ViewModels.Membership.User;
 using SaltStacker.Common.Helper;
@@ -14,16 +14,16 @@ using Microsoft.Extensions.Configuration;
 
 namespace SaltStacker.Application.Services
 {
-    public class CustomerService : ICustomerService
+    public class AccountService : IAccountService
     {
         private readonly IMembershipService _membershipService;
-        private readonly ICustomerRepository _customerRepository;
+        private readonly IAccountRepository _accountRepository;
         private readonly IMapper _iMapper;
         private readonly UserManager<AspNetUser> _userManager;
         private readonly SignInManager<AspNetUser> _signInManager;
         private readonly IConfiguration _configuration;
 
-        public CustomerService(IMembershipService membershipService, ICustomerRepository customerRepository,
+        public AccountService(IMembershipService membershipService, IAccountRepository accountRepository,
             UserManager<AspNetUser> userManager,
             SignInManager<AspNetUser> signInManager,
             IConfiguration configuration)
@@ -32,44 +32,44 @@ namespace SaltStacker.Application.Services
 
             _iMapper = config.CreateMapper();
             _membershipService = membershipService;
-            _customerRepository = customerRepository;
+            _accountRepository = accountRepository;
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
         }
 
-        public async Task<IdentityResult> CreateCustomerAsync(CustomerDto model)
+        public async Task<IdentityResult> CreateAccountAsync(AccountDto model)
         {
             var user = _iMapper.Map<UserDto>(model);
             var createUser = await _membershipService.CreateUserAsync(user);
             if (createUser.Item1.Succeeded)
             {
-                var assignRole = await _membershipService.AddUserToRoleAsync(user.Username, "Customer");
+                var assignRole = await _membershipService.AddUserToRoleAsync(user.Username, "Account");
             }
             return IdentityResult.Failed(new IdentityError { Description = Resources.Error.DatabaseInsert });
 
         }
 
-        public async Task<List<CustomerDto>> GetCustomersAsync(CustomerFilters filter)
+        public async Task<List<AccountDto>> GetAccountsAsync(AccountFilters filter)
         {
-            var predicate = CustomerFilter.ToExpression(filter);
+            var predicate = AccountFilter.ToExpression(filter);
 
-            var model = await _customerRepository.GetCustomersAsync(filter.Start, filter.PageSize, filter.Sort, filter.Direction, predicate);
+            var model = await _accountRepository.GetAccountsAsync(filter.Start, filter.PageSize, filter.Sort, filter.Direction, predicate);
 
-            return _iMapper.Map<List<AspNetUser>, List<CustomerDto>>(model);
+            return _iMapper.Map<List<AspNetUser>, List<AccountDto>>(model);
         }
 
-        public async Task<Customers> GetCustomersModelAsync(CustomerFilters filter)
+        public async Task<Accounts> GetAccountsModelAsync(AccountFilters filter)
         {
-            var predicate = CustomerFilter.ToExpression(filter);
+            var predicate = AccountFilter.ToExpression(filter);
 
-            var recordTotal = await _customerRepository.GetCustomersCountAsync();
+            var recordTotal = await _accountRepository.GetAccountsCountAsync();
 
-            var recordsFilters = await _customerRepository.GetCustomersCountAsync(predicate);
+            var recordsFilters = await _accountRepository.GetAccountsCountAsync(predicate);
 
-            return new Customers
+            return new Accounts
             {
-                Items = await GetCustomersAsync(filter),
+                Items = await GetAccountsAsync(filter),
                 TotalCount = recordTotal,
                 FilteredCount = recordsFilters,
                 Page = filter.Page,
@@ -77,26 +77,26 @@ namespace SaltStacker.Application.Services
             };
         }
 
-        public async Task<CustomerDto> GetCustomerAsync(string id)
+        public async Task<AccountDto> GetAccountAsync(string id)
         {
             var user = await _membershipService.FindUserByIdAsync(id);
-            var customer = _iMapper.Map<CustomerDto>(user);
-            return customer;
+            var account = _iMapper.Map<AccountDto>(user);
+            return account;
         }
 
-        public async Task<IdentityResult> UpdateCustomerAsync(CustomerDto model)
+        public async Task<IdentityResult> UpdateAccountAsync(AccountDto model)
         {
             return await _membershipService.UpdateUserAsync(_iMapper.Map<EditUser>(model));
         }
 
-        public async Task<CustomerProfileApi> GetCustomerProfileByUsernameAsync(string username)
+        public async Task<AccountProfileApi> GetAccountProfileByUsernameAsync(string username)
         {
             var user = await _membershipService.FindUserByNameAsync(username);
-            var customerProfile = _iMapper.Map<CustomerProfileApi>(user);
-            return customerProfile;
+            var accountProfile = _iMapper.Map<AccountProfileApi>(user);
+            return accountProfile;
         }
 
-        public async Task<ServiceResult> UpdateCustomerProfileAsync(CustomerProfileApi model, string username)
+        public async Task<ServiceResult> UpdateAccountProfileAsync(AccountProfileApi model, string username)
         {
             var user = await _membershipService.FindUserByNameAsync(username);
 
@@ -113,20 +113,20 @@ namespace SaltStacker.Application.Services
             return new ServiceResult(true);
         }
 
-        public async Task<int> CountCustomersAsync(CustomerFilters filter)
+        public async Task<int> CountAccountsAsync(AccountFilters filter)
         {
-            var predicate = CustomerFilter.ToExpression(filter);
-            return await _customerRepository.GetCustomersCountAsync(predicate);
+            var predicate = AccountFilter.ToExpression(filter);
+            return await _accountRepository.GetAccountsCountAsync(predicate);
         }
 
         public async Task<AspNetUser> FindUserByPhoneNumber(string phoneNumber)
         {
-            return await _customerRepository.FindUserByPhoneNumber(phoneNumber);
+            return await _accountRepository.FindUserByPhoneNumber(phoneNumber);
         }
 
-        public async Task<RegisterResult> RegisterCustomerAsync(RegisterCustomer model)
+        public async Task<RegisterResult> RegisterAccountAsync(RegisterAccount model)
         {
-            var currentUser = await _customerRepository.FindCustomerByEmailAsync(model.Email.Trim().ToUpper());
+            var currentUser = await _accountRepository.FindAccountByEmailAsync(model.Email.Trim().ToUpper());
             if (currentUser != null)
             {
                 return new RegisterResult { Succeeded = false, ErrorMessage = "Already exists!" };
@@ -156,7 +156,7 @@ namespace SaltStacker.Application.Services
                 PasswordHash = hasher.HashPassword(null, model.Password)
             };
 
-            var register = await _customerRepository.CreateCustomerAsync(user);
+            var register = await _accountRepository.CreateAccountAsync(user);
 
             if (register)
             {
@@ -166,7 +166,7 @@ namespace SaltStacker.Application.Services
             return new RegisterResult { Succeeded = false, ErrorMessage = "Unkown Error" };
         }
 
-        public async Task<CustomerInformation?> GetCustomerInformationAsync(string username)
+        public async Task<AccountInformation?> GetAccountInformationAsync(string username)
         {
             var user = await _membershipService.FindUserByNameAsync(username);
             if (user == null)
@@ -174,7 +174,7 @@ namespace SaltStacker.Application.Services
                 return null;
             }
 
-            return _iMapper.Map<CustomerInformation>(user);
+            return _iMapper.Map<AccountInformation>(user);
         }
     }
 }

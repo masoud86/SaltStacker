@@ -61,6 +61,42 @@ namespace SaltStacker.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        public static string Account {
+            get {
+                return ResourceManager.GetString("Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Food Orders.
+        /// </summary>
+        public static string AccountFoodOrders {
+            get {
+                return ResourceManager.GetString("AccountFoodOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Open Orders.
+        /// </summary>
+        public static string AccountOpenOrders {
+            get {
+                return ResourceManager.GetString("AccountOpenOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accounts.
+        /// </summary>
+        public static string Accounts {
+            get {
+                return ResourceManager.GetString("Accounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New {0}.
         /// </summary>
         public static string AddNew {
@@ -322,20 +358,20 @@ namespace SaltStacker.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Account.
+        /// </summary>
+        public static string CreateAccount {
+            get {
+                return ResourceManager.GetString("CreateAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create At.
         /// </summary>
         public static string CreateAt {
             get {
                 return ResourceManager.GetString("CreateAt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Create Customer.
-        /// </summary>
-        public static string CreateCustomer {
-            get {
-                return ResourceManager.GetString("CreateCustomer", resourceCulture);
             }
         }
         
@@ -480,42 +516,6 @@ namespace SaltStacker.Resources {
         public static string CurrentState {
             get {
                 return ResourceManager.GetString("CurrentState", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Customer.
-        /// </summary>
-        public static string Customer {
-            get {
-                return ResourceManager.GetString("Customer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Customer Food Orders.
-        /// </summary>
-        public static string CustomerFoodOrders {
-            get {
-                return ResourceManager.GetString("CustomerFoodOrders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Customer Open Orders.
-        /// </summary>
-        public static string CustomerOpenOrders {
-            get {
-                return ResourceManager.GetString("CustomerOpenOrders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Customers.
-        /// </summary>
-        public static string Customers {
-            get {
-                return ResourceManager.GetString("Customers", resourceCulture);
             }
         }
         
@@ -781,20 +781,20 @@ namespace SaltStacker.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Account.
+        /// </summary>
+        public static string EditAccount {
+            get {
+                return ResourceManager.GetString("EditAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Bank Gateway.
         /// </summary>
         public static string EditBankGateway {
             get {
                 return ResourceManager.GetString("EditBankGateway", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Customer.
-        /// </summary>
-        public static string EditCustomer {
-            get {
-                return ResourceManager.GetString("EditCustomer", resourceCulture);
             }
         }
         
@@ -1155,24 +1155,6 @@ namespace SaltStacker.Resources {
         public static string InProgress {
             get {
                 return ResourceManager.GetString("InProgress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Kitchen.
-        /// </summary>
-        public static string Kitchen {
-            get {
-                return ResourceManager.GetString("Kitchen", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Kitchens.
-        /// </summary>
-        public static string Kitchens {
-            get {
-                return ResourceManager.GetString("Kitchens", resourceCulture);
             }
         }
         

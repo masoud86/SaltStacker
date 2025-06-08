@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SaltStacker.Application.Interfaces;
 using SaltStacker.Application.ViewModels.Api;
 using SaltStacker.Application.ViewModels.Base;
-using SaltStacker.Application.ViewModels.Customer;
+using SaltStacker.Application.ViewModels.Account;
 using SaltStacker.Application.ViewModels.Membership;
 using SaltStacker.Domain.Models.Membership;
 using System.Security.Claims;
@@ -13,15 +13,15 @@ using System.Web;
 namespace SaltStacker.Api.Controllers;
 
 /// <summary>
-/// Everything about customers
+/// Manage user accounts and authentication
 /// </summary>
 [ApiController]
 [Route("[controller]")]
-public class CustomerController : ControllerBase
+public class AccountController : ControllerBase
 {
     private readonly UserManager<AspNetUser> _userManager;
     private readonly SignInManager<AspNetUser> _signInManager;
-    private readonly ICustomerService _customerService;
+    private readonly IAccountService _accountService;
     private readonly ITokenService _tokenService;
 
     /// <summary>
@@ -29,20 +29,20 @@ public class CustomerController : ControllerBase
     /// </summary>
     /// <param name="userManager">User Manager</param>
     /// <param name="signInManager">Sign in Manager</param>
-    /// <param name="customerService">Customer Services</param>
+    /// <param name="accountService">Account Services</param>
     /// <param name="tokenService">Token Services</param>
-    public CustomerController(UserManager<AspNetUser> userManager,
-        SignInManager<AspNetUser> signInManager, ICustomerService customerService,
+    public AccountController(UserManager<AspNetUser> userManager,
+        SignInManager<AspNetUser> signInManager, IAccountService accountService,
         ITokenService tokenService)
     {
         _userManager = userManager;
         _signInManager = signInManager;
-        _customerService = customerService;
+        _accountService = accountService;
         _tokenService = tokenService;
     }
 
     /// <summary>
-    /// Register a new customer
+    /// Register a new user
     /// </summary>
     /// <remarks>
     /// Email address must be unique / Password policies are not applied yet
@@ -53,7 +53,8 @@ public class CustomerController : ControllerBase
     /// <response code="400">Bad Request</response>
     [HttpPost]
     [Route("[action]")]
-    public async Task<ActionResult<RegisterResponseApi>> Register([FromBody] RegisterCustomer model)
+    [Authorize(Roles = "Administrator")]
+    public async Task<ActionResult<RegisterResponseApi>> Register([FromBody] RegisterAccount model)
     {
         if (!ModelState.IsValid)
         {
@@ -62,7 +63,7 @@ public class CustomerController : ControllerBase
 
         var result = new RegisterResponseApi();
 
-        var register = await _customerService.RegisterCustomerAsync(model);
+        var register = await _accountService.RegisterAccountAsync(model);
 
         result.Succeeded = register.Succeeded;
         result.ErrorMessage = register.ErrorMessage;
@@ -71,11 +72,11 @@ public class CustomerController : ControllerBase
         {
             var claims = new List<Claim>
             {
-                new Claim("type", "Customer"),
+                new Claim("type", "Account"),
                 new Claim("name", register.Username)
             };
 
-            result.CustomerInformation = await _customerService.GetCustomerInformationAsync(register.Username);
+            result.AccountInformation = await _accountService.GetAccountInformationAsync(register.Username);
             result.AccessToken = _tokenService.GenerateAccessToken(claims);
             result.RefreshToken = _tokenService.GenerateRefreshToken();
             await _tokenService.UpdateRefreshTokenAsync(register.Username, result.RefreshToken);
@@ -96,7 +97,7 @@ public class CustomerController : ControllerBase
     [HttpPost]
     [Route("[action]")]
     [AllowAnonymous]
-    public async Task<ActionResult<LoginResult>> Login([FromBody] CustomerLogin model)
+    public async Task<ActionResult<LoginResult>> Login([FromBody] AccountLogin model)
     {
         if (!ModelState.IsValid)
         {
@@ -106,7 +107,7 @@ public class CustomerController : ControllerBase
         var user = await _userManager.FindByEmailAsync(model.Username);
         if (user == null)
         {
-            user = await _customerService.FindUserByPhoneNumber(model.Username);
+            user = await _accountService.FindUserByPhoneNumber(model.Username);
             if (user == null)
             {
                 return StatusCode(StatusCodes.Status403Forbidden, "Login faild. Invalid username or password.");
@@ -129,7 +130,7 @@ public class CustomerController : ControllerBase
 
             var claims = new List<Claim>
             {
-                new Claim("type", "Customer"),
+                new Claim("type", "Account"),
                 new Claim("name", user.UserName)
             };
 
@@ -137,7 +138,7 @@ public class CustomerController : ControllerBase
             {
                 AccessToken = _tokenService.GenerateAccessToken(claims),
                 RefreshToken = _tokenService.GenerateRefreshToken(),
-                CustomerInformation = await _customerService.GetCustomerInformationAsync(user.UserName)
+                AccountInformation = await _accountService.GetAccountInformationAsync(user.UserName)
             };
 
             await _tokenService.UpdateRefreshTokenAsync(user.UserName, result.RefreshToken);
@@ -194,7 +195,7 @@ public class CustomerController : ControllerBase
     }
 
     /// <summary>
-    /// Invoke customer token
+    /// Invoke account token
     /// </summary>
     /// <returns>No content</returns>
     /// <response code="200">Successful operation</response>
@@ -211,18 +212,18 @@ public class CustomerController : ControllerBase
     }
 
     /// <summary>
-    /// Get logged in customer information
+    /// Get logged in account information
     /// </summary>
-    /// <returns>Customer Information</returns>
+    /// <returns>Account Information</returns>
     /// <response code="200">Operation status</response>
     /// <response code="400">Bad request</response>
     [HttpPost]
     [Route("[action]")]
     [Authorize(AuthenticationSchemes = "Bearer")]
-    public async Task<ActionResult<CustomerInformation>> Info()
+    public async Task<ActionResult<AccountInformation>> Info()
     {
         var username = User.Claims.First(p => p.Type == "name").Value;
-        var user = await _customerService.GetCustomerInformationAsync(username);
+        var user = await _accountService.GetAccountInformationAsync(username);
 
         if (user == null)
         {
@@ -233,29 +234,29 @@ public class CustomerController : ControllerBase
     }
 
     /// <summary>
-    /// Get customer profile
+    /// Get account profile
     /// </summary>
-    /// <returns>Customer Profile</returns>
+    /// <returns>Account Profile</returns>
     /// <response code="200">Operation status</response>
     /// <response code="400">Bad request</response>
     [HttpGet]
     [Route("[action]")]
     [Authorize(AuthenticationSchemes = "Bearer")]
-    public async Task<ActionResult<CustomerProfileApi>> GetProfile()
+    public async Task<ActionResult<AccountProfileApi>> GetProfile()
     {
         var username = User.Claims.First(p => p.Type == "name").Value;
-        var user = await _customerService.GetCustomerInformationAsync(username);
+        var user = await _accountService.GetAccountInformationAsync(username);
 
         if (user == null)
         {
             return BadRequest("Not Found!");
         }
 
-        return new OkObjectResult(await _customerService.GetCustomerProfileByUsernameAsync(username));
+        return new OkObjectResult(await _accountService.GetAccountProfileByUsernameAsync(username));
     }
 
     /// <summary>
-    /// Update customer profile
+    /// Update account profile
     /// </summary>
     /// <param name="model">Address Model</param>
     /// <returns>Service Result</returns>
@@ -264,17 +265,17 @@ public class CustomerController : ControllerBase
     [HttpPost]
     [Route("[action]")]
     [Authorize(AuthenticationSchemes = "Bearer")]
-    public async Task<ActionResult<ServiceResult>> UpdateProfile(CustomerProfileApi model)
+    public async Task<ActionResult<ServiceResult>> UpdateProfile(AccountProfileApi model)
     {
         var username = User.Claims.First(p => p.Type == "name").Value;
-        var user = await _customerService.GetCustomerInformationAsync(username);
+        var user = await _accountService.GetAccountInformationAsync(username);
 
         if (user == null)
         {
             return BadRequest("Not Found!");
         }
 
-        var result = await _customerService.UpdateCustomerProfileAsync(model, username);
+        var result = await _accountService.UpdateAccountProfileAsync(model, username);
 
         if (result.Succeeded)
         {
@@ -285,7 +286,7 @@ public class CustomerController : ControllerBase
     }
 
     /// <summary>
-    /// Change Customer Password
+    /// Change Account Password
     /// </summary>
     /// <param name="model">Change Password Model</param>
     /// <returns>Identity Result</returns>
@@ -334,7 +335,7 @@ public class CustomerController : ControllerBase
     //        await _emailService.SendEmailByGmailApiAsync(new[] { user.Email },
     //            "Password Reset", TemplateHelper.GenerateEmailBody("Email/Membership/ResetPassword", new
     //            {
-    //                Customer = user.Name,
+    //                Account = user.Name,
     //                Username = user.UserName,
     //                Token = HttpUtility.UrlEncode(token).Replace("%", "_")
     //            }, _configuration.GetSection("DevelopmentMode").Get<bool>()));

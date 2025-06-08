@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace SaltStacker.Data.Migrations
 {
     /// <inheritdoc />
@@ -40,10 +42,7 @@ namespace SaltStacker.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
-                    DisplayName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    Icon = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    IsLocked = table.Column<bool>(type: "bit", nullable: true),
+                    IsSystem = table.Column<bool>(type: "bit", nullable: true),
                     CreateDateTime = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "GETUTCDATE()"),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -65,7 +64,7 @@ namespace SaltStacker.Data.Migrations
                     RefreshToken = table.Column<string>(type: "nvarchar(max)", maxLength: 2147483647, nullable: true),
                     RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreateDateTime = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "GETUTCDATE()"),
-                    IsAdmin = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    IsSystem = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -945,35 +944,6 @@ namespace SaltStacker.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Kitchens",
-                schema: "operation",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Subtitle = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
-                    ZoneId = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
-                    Location = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    Longitude = table.Column<double>(type: "float", maxLength: 15, nullable: true),
-                    Latitude = table.Column<double>(type: "float", maxLength: 15, nullable: true),
-                    PostalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "GETUTCDATE()")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Kitchens", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Kitchens_Zones_ZoneId",
-                        column: x => x.ZoneId,
-                        principalSchema: "settings",
-                        principalTable: "Zones",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RecipeIngredientTypeUnits",
                 schema: "nutrition",
                 columns: table => new
@@ -1003,67 +973,6 @@ namespace SaltStacker.Data.Migrations
                         column: x => x.RecipeId,
                         principalSchema: "nutrition",
                         principalTable: "Recipes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "KitchenRecipes",
-                schema: "operation",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    KitchenId = table.Column<int>(type: "int", nullable: false),
-                    RecipeId = table.Column<int>(type: "int", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "GETUTCDATE()")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_KitchenRecipes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_KitchenRecipes_Kitchens_KitchenId",
-                        column: x => x.KitchenId,
-                        principalSchema: "operation",
-                        principalTable: "Kitchens",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_KitchenRecipes_Recipes_RecipeId",
-                        column: x => x.RecipeId,
-                        principalSchema: "nutrition",
-                        principalTable: "Recipes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "KitchenUsers",
-                schema: "operation",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    KitchenId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Position = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    IsOwner = table.Column<bool>(type: "bit", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "GETUTCDATE()")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_KitchenUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_KitchenUsers_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_KitchenUsers_Kitchens_KitchenId",
-                        column: x => x.KitchenId,
-                        principalSchema: "operation",
-                        principalTable: "Kitchens",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -1120,6 +1029,25 @@ namespace SaltStacker.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "IsSystem", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "634fce1a-f3e0-4512-86ab-628adb4999f1", null, "AspNetRole", true, "User", "USER" },
+                    { "72c2c695-2efd-4fcf-b083-dcb1f47fa314", null, "AspNetRole", true, "Administrator", "ADMINISTRATOR" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "IsBlocked", "IsSystem", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "011b406e-94e4-480f-b0e3-d7ac50db372c", 0, "4c159afc-539f-4d73-b997-d23eea86b75c", "AspNetUser", null, false, false, true, false, null, "Admin", null, null, "AQAAAAIAAYagAAAAEI0CynVzbtPbQD3eAMJft/5fjCYJbXaectUfMaDSh85aoH6XqLGQsyhEUMH6xP76Ng==", null, false, null, null, "081c6cd0-07fb-457f-9e8e-92cea0fd4cae", false, null });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "72c2c695-2efd-4fcf-b083-dcb1f47fa314", "011b406e-94e4-480f-b0e3-d7ac50db372c" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ApplicationSettings_Key",
@@ -1256,43 +1184,6 @@ namespace SaltStacker.Data.Migrations
                 schema: "nutrition",
                 table: "IngredientTypeUnits",
                 column: "UnitId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_KitchenRecipes_KitchenId",
-                schema: "operation",
-                table: "KitchenRecipes",
-                column: "KitchenId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_KitchenRecipes_RecipeId",
-                schema: "operation",
-                table: "KitchenRecipes",
-                column: "RecipeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Kitchens_Title",
-                schema: "operation",
-                table: "Kitchens",
-                column: "Title",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Kitchens_ZoneId",
-                schema: "operation",
-                table: "Kitchens",
-                column: "ZoneId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_KitchenUsers_KitchenId",
-                schema: "operation",
-                table: "KitchenUsers",
-                column: "KitchenId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_KitchenUsers_UserId",
-                schema: "operation",
-                table: "KitchenUsers",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PackageAttachments_PackageId",
@@ -1454,14 +1345,6 @@ namespace SaltStacker.Data.Migrations
                 schema: "nutrition");
 
             migrationBuilder.DropTable(
-                name: "KitchenRecipes",
-                schema: "operation");
-
-            migrationBuilder.DropTable(
-                name: "KitchenUsers",
-                schema: "operation");
-
-            migrationBuilder.DropTable(
                 name: "PackageAttachments",
                 schema: "nutrition");
 
@@ -1494,15 +1377,15 @@ namespace SaltStacker.Data.Migrations
                 schema: "nutrition");
 
             migrationBuilder.DropTable(
+                name: "Zones",
+                schema: "settings");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "IngredientSubCategories",
                 schema: "nutrition");
-
-            migrationBuilder.DropTable(
-                name: "Kitchens",
-                schema: "operation");
 
             migrationBuilder.DropTable(
                 name: "PackageGroups",
@@ -1525,12 +1408,12 @@ namespace SaltStacker.Data.Migrations
                 schema: "nutrition");
 
             migrationBuilder.DropTable(
-                name: "IngredientCategories",
-                schema: "nutrition");
+                name: "Cities",
+                schema: "settings");
 
             migrationBuilder.DropTable(
-                name: "Zones",
-                schema: "settings");
+                name: "IngredientCategories",
+                schema: "nutrition");
 
             migrationBuilder.DropTable(
                 name: "Packages",
@@ -1545,7 +1428,7 @@ namespace SaltStacker.Data.Migrations
                 schema: "nutrition");
 
             migrationBuilder.DropTable(
-                name: "Cities",
+                name: "Provinces",
                 schema: "settings");
 
             migrationBuilder.DropTable(
@@ -1560,16 +1443,12 @@ namespace SaltStacker.Data.Migrations
                 schema: "nutrition");
 
             migrationBuilder.DropTable(
-                name: "Provinces",
+                name: "Countries",
                 schema: "settings");
 
             migrationBuilder.DropTable(
                 name: "Ingredients",
                 schema: "nutrition");
-
-            migrationBuilder.DropTable(
-                name: "Countries",
-                schema: "settings");
 
             migrationBuilder.DropTable(
                 name: "IngredientCookingCategories",

@@ -14,6 +14,6 @@ namespace SaltStacker.Domain.Models.Membership
 
         public DateTime CreateDateTime { get; set; }
 
-        public bool IsAdmin { get; set; }
+        public bool IsSystem { get; set; }
     }
 }
